@@ -4,7 +4,7 @@
 
 The PlatformIO **development platform** for the Nordic nRF54L series
 (nRF54L05 / nRF54L10 / nRF54L15) — Cortex-M33 with RRAM, targeting an
-Adafruit-style Arduino core on the **s145 SoftDevice v9.0.0**.
+Adafruit-style Arduino core on the **s145 SoftDevice v10.0.1**.
 
 This repo holds no firmware source. It is the orchestration layer:
 `platform.json` declares the package set, `builder/` drives the build
@@ -96,9 +96,14 @@ negative suffixes `+nofp`/`+nodsp` are accepted). Use bare
 
 ### Two hex files, two locations, resolved by `adafruit.py`
 
-- **SoftDevice hex** — from the framework package:
-  `{FRAMEWORK_DIR}/bootloader/s145/9.0.0/s145_nrf54l<chip>_9.0.0_softdevice.hex`
-  → `env["SOFTDEVICEHEX"]`
+- **SoftDevice hex** — from the framework package, which mirrors
+  `sdk-nrf-bm`'s per-SoC-family split:
+  `{FRAMEWORK_DIR}/bootloader/s145/10.0.1/<sd_family>/s145_<sd_soc>_10.0.1_softdevice.hex`
+  → `env["SOFTDEVICEHEX"]`. `sd_family` and `sd_soc` come from the board's
+  `build.softdevice` block, not from `build.mcu`, because the part name
+  (`nrf54lm20a`) matches neither the family (`nrf54lm`) nor the hex
+  (`nrf54lm20`). The family also picks the API header set at
+  `{FRAMEWORK_DIR}/cores/nRF5/nordic/softdevice/s145_<sd_family>_10.0.1_API/`.
 - **Bootloader hex** — from the bootloader package:
   `{BOOTLOADER_DIR}/release/<variant>_bootloader.hex`
   → `env["DFUBOOTHEX"]`

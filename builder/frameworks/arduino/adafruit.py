@@ -38,7 +38,13 @@ mcu = board.get("build.mcu", "")
 variant = board.get("build.variant", "")
 sd_name = board.get("build.softdevice.sd_name", "s145")
 sd_flags = board.get("build.softdevice.sd_flags", "-DS145")
-sd_version = board.get("build.softdevice.sd_version", "9.0.0")
+sd_version = board.get("build.softdevice.sd_version", "10.0.1")
+# sdk-nrf-bm ships s145 per SoC family (nrf54l, nrf54lm, ...): one API header
+# set for the family, one hex per SoC in it. sd_family picks the header set and
+# the hex directory, sd_soc the hex itself. build.mcu names the real part
+# (nrf54lm20a) and does not match either, so both are declared per board.
+sd_family = board.get("build.softdevice.sd_family", "nrf54l")
+sd_soc = board.get("build.softdevice.sd_soc", mcu)
 ldscript = board.get("build.arduino.ldscript", "")
 
 env.Append(
@@ -99,9 +105,7 @@ env.Append(
         os.path.join(FRAMEWORK_DIR, "cores", "nRF5", "nordic", "nrfx", "bsp", "stable", "soc"),
         os.path.join(FRAMEWORK_DIR, "cores", "nRF5", "nordic", "CMSIS", "Include"),
         os.path.join(FRAMEWORK_DIR, "cores", "nRF5", "nordic", "softdevice",
-                     "%s_nrf54l_%s_API" % (sd_name, sd_version), "include"),
-        os.path.join(FRAMEWORK_DIR, "cores", "nRF5", "nordic", "softdevice",
-                     "%s_nrf54l_%s_API" % (sd_name, sd_version), "include", "nrf54l"),
+                     "%s_%s_%s_API" % (sd_name, sd_family, sd_version), "include"),
         # FreeRTOS path is Source/, not source/ — case matters on Linux.
         os.path.join(FRAMEWORK_DIR, "cores", "nRF5", "freertos", "Source", "include"),
         os.path.join(FRAMEWORK_DIR, "cores", "nRF5", "freertos", "config"),
@@ -165,8 +169,8 @@ if ldscript:
     env.Replace(LDSCRIPT_PATH=ld_path)
 
 sd_hex_path = os.path.join(
-    FRAMEWORK_DIR, "bootloader", sd_name, sd_version,
-    "%s_%s_%s_softdevice.hex" % (sd_name, mcu, sd_version))
+    FRAMEWORK_DIR, "bootloader", sd_name, sd_version, sd_family,
+    "%s_%s_%s_softdevice.hex" % (sd_name, sd_soc, sd_version))
 
 if os.path.isfile(sd_hex_path):
     env.Append(SOFTDEVICEHEX=sd_hex_path)
