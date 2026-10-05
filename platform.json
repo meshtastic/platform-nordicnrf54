@@ -36,7 +36,7 @@
     "framework-arduinoadafruitnrf54": {
       "type": "framework",
       "optional": true,
-      "version": "https://github.com/meshtastic/nRF54_Arduino.git#v0.3.0"
+      "version": "https://github.com/meshtastic/nRF54_Arduino.git#v0.3.1"
     },
     "framework-arduinoadafruitnrf54-bootloader": {
       "type": "framework",
