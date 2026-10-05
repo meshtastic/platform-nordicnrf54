@@ -27,6 +27,10 @@ authentication. A framework or bootloader fix reaches consumers only
 after a new tag there and a pin bump here; bump the platform version in
 the same commit so PlatformIO refreshes its cached copy.
 
+Renovate (`renovate.json`, regex manager) watches both repos' tags and
+opens PRs bumping the pins in `platform.json`. It does not touch the
+platform `version`; bump that in the Renovate PR before merging.
+
 ## Project conventions
 
 ### Commit messages
