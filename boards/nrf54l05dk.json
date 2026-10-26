@@ -42,8 +42,8 @@
   ],
   "name": "Nordic nRF54L05-DK",
   "upload": {
-    "maximum_ram_size": 54144,
-    "maximum_size": 322560,
+    "maximum_ram_size": 79744,
+    "maximum_size": 258048,
     "speed": 115200,
     "protocol": "nrfutil",
     "protocols": [
