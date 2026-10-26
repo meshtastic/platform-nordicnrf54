@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/meshtastic/platform-nordicnrf54.git"
   },
-  "version": "0.3.1",
+  "version": "0.5.0",
   "frameworks": {
     "arduino": {
       "package": "framework-arduinoadafruitnrf54",
@@ -36,12 +36,12 @@
     "framework-arduinoadafruitnrf54": {
       "type": "framework",
       "optional": true,
-      "version": "https://github.com/meshtastic/nRF54_Arduino.git#v0.3.1"
+      "version": "https://github.com/meshtastic/nRF54_Arduino.git#v0.5.0"
     },
     "framework-arduinoadafruitnrf54-bootloader": {
       "type": "framework",
       "optional": true,
-      "version": "https://github.com/meshtastic/nRF54_Bootloader.git#v0.3.0"
+      "version": "https://github.com/meshtastic/nRF54_Bootloader.git#v0.5.0"
     },
     "framework-cmsis": {
       "type": "framework",
